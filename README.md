@@ -23,7 +23,7 @@ App provides a search function for a specific city and returns a 5 day forecast 
 Clone the project
 
 ```bash
-  git clone https://github.com/VanSlam/weather-app-code-test
+  git clone https://github.com/VanSlam/weather-app-code-test-adaptavist.git
 ```
 
 Go to the project directory
