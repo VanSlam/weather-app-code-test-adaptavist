@@ -32,6 +32,8 @@ Go to the project directory
   cd weather-app-code-test
 ```
 
+Modify the .env.example to .env and enter your API key
+
 Install dependencies
 
 ```bash
