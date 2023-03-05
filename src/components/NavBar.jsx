@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-function MyAppBar() {
-  const [searchValue, setSearchValue] = useState('');
+function MyAppBar({ onLocationChange }) {
+  const [searchText, setSearchText] = useState('');
 
-  const handleSearchSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Do something with the search value, such as fetching search results from an API
-    setSearchValue('');
+    onLocationChange(searchText);
+    setSearchText('');
   };
 
   return (
@@ -15,8 +15,14 @@ function MyAppBar() {
         My Weather App
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <form onSubmit={handleSearchSubmit}>
-          <input type="text" placeholder="Search..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)} style={{ marginRight: '8px' }} />
+        <form onSubmit={handleSubmit}>
+          <input 
+            type="text"
+            placeholder="Enter a location.."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            style={{ marginRight: '8px' }}
+          />
           <button type="submit" style={{ backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '3px', padding: '8px 12px', cursor: 'pointer' }}>
             Search
           </button>

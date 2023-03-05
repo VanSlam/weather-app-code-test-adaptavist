@@ -1,98 +1,96 @@
-import React, { useState } from 'react';
-import background from '../assets/01d.svg'
+import React, { useState, useEffect } from 'react';
+import './WeatherForecast.css';
 
-function WeatherForecast() {
-  const [city, setCity] = useState('');
+function WeatherForecast({ location }) {
+  const [city, setCity] = useState(location);
   const [forecastData, setForecastData] = useState([]);
-  const [searched, setSearched] = useState(false);
+  const [showCards, setShowCards] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [showSearchForm, setShowSearchForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (location) {
+      setCity(location);
+      handleSubmit();
+    }
+  }, [location]);
 
+  const handleSubmit = async (e) => {
+    e?.preventDefault();
     try {
-      // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&type=accurate&appid=3a240c3c7796882a67be4f12560c4afa`);
-      const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&type=accurate&appid=3a240c3c7796882a67be4f12560c4afa&cnt=20`);
+      const API_KEY = import.meta.env.API_KEY;
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&type=accurate&appid=${API_KEY}&cnt=20`);
       const data = await response.json();
-      console.log(data)
-      setForecastData(data.list);
-      setSearched(true);
+      if (data.cod === "200") {
+        setForecastData(data.list);
+        setShowCards(true);
+        setShowSearchForm(false);
+        setErrorMessage('');
+      } else {
+        setErrorMessage(data.message);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleCityChange = (event) => {
-    setCity(event.target.value);
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    setShowCards(false);
   };
 
-  const handleDate = (dt) => {
-    const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
-    const dateString = new Date(dt * 1000).toLocaleDateString('en-US', dateOptions);
-    const dayOfMonth = dateString.split(' ')[2];
-    let suffix;
-  
-    if (dayOfMonth === '1' || dayOfMonth === '21' || dayOfMonth === '31') {
-      suffix = 'st';
-    } else if (dayOfMonth === '2' || dayOfMonth === '22') {
-      suffix = 'nd';
-    } else if (dayOfMonth === '3' || dayOfMonth === '23') {
-      suffix = 'rd';
-    } else {
-      suffix = 'th';
-    }
-  
-    return (dateString + suffix);
-  };  
+  const getUniqueDays = () => {
+    const uniqueDays = [...new Set(forecastData.map(item => new Date(item.dt * 1000).toLocaleDateString(undefined, { weekday: 'long' })))];
+    return uniqueDays.slice(0, 5);
+  };
 
-  // return (
-  //   <div className="weather-forecast">
-  //     <div className="weather-header">
-  //       <h1>Enter a City and State</h1>
-  //       <form onSubmit={handleSubmit}>
-  //         <input type="text" value={city} onChange={handleCityChange} placeholder="City, State" />
-  //         <button type="submit">Search</button>
-  //       </form>
-  //     </div>
-  //     <div className="weather-cards">
-  //       {forecastData.map((item) => (
-  //         <div className="weather-card" key={item.dt}>
-  //           <img src={`../assets/${item.weather[0].icon}.svg`} alt="weather icon" />
-  //           <p>{handleDate(item.dt)}</p>
-  //       </div>
-  //       ))}
-  //     </div>
-  //   </div>
-  // );
+  const getCardsForDay = (day) => {
+    return forecastData.find(item => new Date(item.dt * 1000).toLocaleDateString(undefined, { weekday: 'long' }) === day);
+  };
+
+  const getTemp = (temp) => {
+    return Math.round((temp - 273.15) * 9/5 + 32);
+  };
 
   return (
-    <div className="weather-forecast">
-      {!searched ? ( // display search bar if search has not been performed
-        <form onSubmit={handleSearch}>
-          <h1>Enter a City and State</h1>
-          <input
-            type="text"
-            placeholder="City, State"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-          <button type="submit">Search</button>
-        </form>
-      ) : (
-        // display weather cards if search has been performed
-        <div className="weather-cards">
-          {forecastData.map((item) => (
-            <div className="weather-card" key={item.dt}>
-              <img src={`../src/assets/${item.weather[0].icon}.svg`} alt="weather icon" />
-              <p>{handleDate(item.dt)}</p>
+    <div className="weather-container">
+      {showSearchForm && (
+        <div className="weather-input">
+          <h1 className="search-label">Enter a City and State:</h1>
+          <form className="search-container" onSubmit={handleSubmit}>
+            <input type="text" placeholder="City, State" onChange={(e) => (setCity(e.target.value))} />
+            <button className="search-button" type="submit">Search</button>
+          </form>
+        </div>
+      )}
+      {errorMessage && (
+        <div className="error-message">
+          <p>{errorMessage}</p>
+        </div>
+      )}
+      {showCards && (
+        <div className="weather-cards-container">
+          {getUniqueDays().map((day, index) => (
+            <div className="weather-card" key={index} onClick={() => handleCardClick(getCardsForDay(day))}>
+              <img src={`../src/assets/${getCardsForDay(day).weather[0].icon}.svg`} alt="weather icon" />
+              <p>{new Date(getCardsForDay(day).dt * 1000).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}</p>
             </div>
           ))}
         </div>
       )}
+      {selectedCard && (
+        <div className="selected-card">
+          <h2>{`${city}, ${new Date(selectedCard.dt * 1000).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}`}</h2>
+          <p>Weather: {selectedCard.weather[0].description}</p>
+          <p>Min Temperature: {getTemp(selectedCard.main.temp_min)}°F</p>
+          <p>Max Temperature: {getTemp(selectedCard.main.temp_max)}°F</p>
+          <p>Humidity: {selectedCard.main.humidity}%</p>
+          <button onClick={() => (setSelectedCard(null), setShowSearchForm(true))}>Close</button>
+        </div>
+      )}
     </div>
   );
-
-
-
 }
 
 export default WeatherForecast;
