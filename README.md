@@ -29,7 +29,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd weather-app-code-test
+  cd weather-app-code-test-adaptavist
 ```
 
 Modify the .env.example filename to .env and enter your API key. You can sign up and get a free api key here: https://openweathermap.org/home/sign_up
