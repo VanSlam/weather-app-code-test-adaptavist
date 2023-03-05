@@ -32,7 +32,7 @@ Go to the project directory
   cd weather-app-code-test
 ```
 
-Modify the .env.example to .env and enter your API key
+Modify the .env.example filename to .env and enter your API key. You can sign up and get a free api key here: https://openweathermap.org/home/sign_up
 
 Install dependencies
 
