@@ -20,6 +20,7 @@ function App() {
       <WeatherForecast
         key={location}
         location={location}
+        setLocation={setLocation}
       />
     </div>
   )

@@ -1,3 +1,46 @@
 body {
-    font-family: 'Open Sans', sans-serif;
-  }
+  font-family: 'Open Sans', sans-serif;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: #ed7652;
+}
+
+.navbar-title {
+  flex: 1;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.navbar-search {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-search-input {
+  margin-right: 8px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  color: #333;
+}
+
+.navbar-search-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+*:focus {
+    outline: none;
+}

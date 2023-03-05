@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './WeatherForecast.css'
 
-function WeatherForecast({ location }) {
+function WeatherForecast({ location, setLocation}) {
   const [city, setCity] = useState(location)
   const [forecastData, setForecastData] = useState([])
   const [showCards, setShowCards] = useState(false)
@@ -72,14 +72,14 @@ function WeatherForecast({ location }) {
     <div className='weather-container'>
       {showSearchForm && (
         <div className='weather-input'>
-          <h1 className='search-label'>Enter a City and State:</h1>
+          <h1 className='search-label'>Enter a City and State</h1>
           <form
             className='search-container'
             onSubmit={handleSubmit}
           >
             <input
               type='text'
-              placeholder='City, State'
+              placeholder='Enter a city...'
               onChange={(e) => setCity(e.target.value)}
             />
             <button
@@ -113,7 +113,7 @@ function WeatherForecast({ location }) {
               <p>
                 {new Date(getCardsForDay(day).dt * 1000).toLocaleDateString(
                   undefined,
-                  { weekday: 'long', month: 'long', day: 'numeric' }
+                  { weekday: 'long', month: 'short', day: 'numeric' }
                 )}
               </p>
             </div>
@@ -134,7 +134,7 @@ function WeatherForecast({ location }) {
           <p>Max Temp: {getTemp(selectedCard.main.temp_max)}°F</p>
           <p>Humidity: {selectedCard.main.humidity}%</p>
           <button
-            onClick={() => (setSelectedCard(null), setShowSearchForm(true), setCity(''))}
+            onClick={() => (setSelectedCard(null), setShowSearchForm(true), setCity(''), setLocation(''))}
           >
             Close
           </button>

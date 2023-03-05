@@ -1,50 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import './NavBar.css';
 
-function MyAppBar({ onLocationChange }) {
-  const [searchText, setSearchText] = useState('')
+function NavBar(props) {
+  const [searchText, setSearchText] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    onLocationChange(searchText)
-    setSearchText('')
-  }
+    e.preventDefault();
+    props.onLocationChange(searchText);
+    setSearchText("");
+  };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '8px 16px',
-        backgroundColor: '#ed7652',
-      }}
-    >
-      <div style={{ flex: 1, color: 'white' }}>My Weather App</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div className="navbar">
+      <div className="navbar-title">
+        My Weather App
+      </div>
+      <div className="navbar-search">
         <form onSubmit={handleSubmit}>
-          <input
-            type='text'
-            placeholder='Enter a location..'
+          <input 
+            type="text"
+            placeholder="Enter a city..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            style={{ marginRight: '8px' }}
+            className="navbar-search-input"
           />
-          <button
-            type='submit'
-            style={{
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '3px',
-              padding: '8px 12px',
-              cursor: 'pointer',
-            }}
-          >
+          <button type="submit" className="navbar-search-button">
             Search
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default MyAppBar
+export default NavBar;
