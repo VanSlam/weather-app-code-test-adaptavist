@@ -15,7 +15,10 @@ function App() {
       className='App'
       style={{ backgroundImage: `url(${background})` }}
     >
-      <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"/>
+      <link
+        href='https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'
+        rel='stylesheet'
+      />
       <MyAppBar onLocationChange={handleLocationChange} />
       <WeatherForecast
         key={location}

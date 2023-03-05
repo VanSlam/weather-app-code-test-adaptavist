@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './WeatherForecast.css'
 
-function WeatherForecast({ location, setLocation}) {
+function WeatherForecast({ location, setLocation }) {
   const [city, setCity] = useState(location)
   const [forecastData, setForecastData] = useState([])
   const [showCards, setShowCards] = useState(false)
@@ -98,32 +98,38 @@ function WeatherForecast({ location, setLocation}) {
       )}
       {showCards && (
         <div>
-        <h1 className='card-title'>{`${city}`}</h1>
-        <div className='weather-cards-container'>
-          {getUniqueDays().map((day, index) => (
-            <div
-              className='weather-card'
-              key={index}
-              onClick={() => handleCardClick(getCardsForDay(day))}
-            >
-              <img
-                src={`../src/assets/${getCardsForDay(day).weather[0].icon}.svg`}
-                alt='weather icon'
-              />
-              <p>
-                {new Date(getCardsForDay(day).dt * 1000).toLocaleDateString(
-                  undefined,
-                  { weekday: 'long', month: 'short', day: 'numeric' }
-                )}
-              </p>
-            </div>
-          ))}
-        </div>
+          <h1 className='card-title'>{`${city}`}</h1>
+          <div className='weather-cards-container'>
+            {getUniqueDays().map((day, index) => (
+              <div
+                className='weather-card'
+                key={index}
+                onClick={() => handleCardClick(getCardsForDay(day))}
+              >
+                <img
+                  src={`../src/assets/${
+                    getCardsForDay(day).weather[0].icon
+                  }.svg`}
+                  alt='weather icon'
+                />
+                <p>
+                  {new Date(getCardsForDay(day).dt * 1000).toLocaleDateString(
+                    undefined,
+                    { weekday: 'long', month: 'short', day: 'numeric' }
+                  )}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {selectedCard && (
         <div className='selected-card'>
-          <img className='selected-card-icon'src={`../src/assets/${selectedCard.weather[0].icon}.svg`} alt="weather icon" />
+          <img
+            className='selected-card-icon'
+            src={`../src/assets/${selectedCard.weather[0].icon}.svg`}
+            alt='weather icon'
+          />
           <h2>{`${new Date(selectedCard.dt * 1000).toLocaleDateString(
             undefined,
             { weekday: 'long', month: 'short', day: 'numeric' }
@@ -134,7 +140,12 @@ function WeatherForecast({ location, setLocation}) {
           <p>Max Temp: {getTemp(selectedCard.main.temp_max)}°F</p>
           <p>Humidity: {selectedCard.main.humidity}%</p>
           <button
-            onClick={() => (setSelectedCard(null), setShowSearchForm(true), setCity(''), setLocation(''))}
+            onClick={() => (
+              setSelectedCard(null),
+              setShowSearchForm(true),
+              setCity(''),
+              setLocation('')
+            )}
           >
             Close
           </button>

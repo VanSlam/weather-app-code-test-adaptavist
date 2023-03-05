@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-.weather-input input[type="text"] {
+.weather-input input[type='text'] {
   width: 200px;
   font-size: 16px;
 }
@@ -124,7 +124,7 @@ body {
 .card-title {
   font-weight: normal;
   text-align: center;
-  color: black
+  color: black;
 }
 
 .selected-card-icon {
