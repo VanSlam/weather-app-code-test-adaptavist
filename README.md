@@ -15,7 +15,7 @@ App provides a search function for a specific city and returns a 5 day forecast 
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `API_KEY` | `string` | **Required**. Your API key |
+| `VITE_API_KEY` | `string` | **Required**. Your API key |
 
 
 ## Run Locally
