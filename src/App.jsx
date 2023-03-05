@@ -13,7 +13,7 @@ function App() {
   return (
     <div
       className='App'
-      style={{ backgroundImage: 'url(' + '../src/assets/pattern.svg' + ')' }}
+      style={{ backgroundImage: `url(${background})` }}
     >
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"/>
       <MyAppBar onLocationChange={handleLocationChange} />

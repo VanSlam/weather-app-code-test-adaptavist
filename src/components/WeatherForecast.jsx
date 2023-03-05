@@ -21,7 +21,7 @@ function WeatherForecast({ location, setLocation}) {
     try {
       const API_KEY = import.meta.env.VITE_API_KEY
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&type=accurate&appid=${API_KEY}&cnt=20`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&type=accurate&appid=${API_KEY}`
       )
       const data = await response.json()
       if (data.cod === '200') {
