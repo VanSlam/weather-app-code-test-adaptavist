@@ -19,7 +19,7 @@ function WeatherForecast({ location }) {
   const handleSubmit = async (e) => {
     e?.preventDefault();
     try {
-      const API_KEY = import.meta.env.API_KEY;
+      const API_KEY = import.meta.env.VITE_API_KEY;
       const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&type=accurate&appid=${API_KEY}&cnt=20`);
       const data = await response.json();
       if (data.cod === "200") {
