@@ -42,18 +42,11 @@ function WeatherForecast({ location, setLocation }) {
     setShowCards(false)
   }
 
-  const getUniqueDays = () => {
-    const uniqueDays = [
-      ...new Set(
-        forecastData.map((item) =>
-          new Date(item.dt * 1000).toLocaleDateString(undefined, {
-            weekday: 'long',
-          })
-        )
-      ),
-    ]
-    return uniqueDays.slice(0, 5)
-  }
+  const getUniqueDays = () =>
+  forecastData
+    .map(item => new Date(item.dt * 1000).toLocaleDateString(undefined, { weekday: 'long' }))
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .slice(0, 5)
 
   const getCardsForDay = (day) => {
     return forecastData.find(
