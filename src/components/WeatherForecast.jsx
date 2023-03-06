@@ -57,9 +57,7 @@ function WeatherForecast({ location, setLocation }) {
     )
   }
 
-  const getTemp = (temp) => {
-    return Math.round(((temp - 273.15) * 9) / 5 + 32)
-  }
+  const getTemp = temp => Math.round((temp - 273.15) * 1.8 + 32)
 
   return (
     <div className='weather-container'>
